@@ -28,9 +28,35 @@ Route::get('/get-cache', function () {
     echo Cache::store('file')->get('key-3', 'value-3') . '<br>'; //drivers change options. / 'database'
     echo Cache::get('key-4', 'value-4') . '<br>'; // outra forma de persistência
     echo Cache::get('não_existe', 'Meu valor padrão') . "<br>";
-    $users =  Cache::get('não_existe', function () {
+    $users =  Cache::get('users', function () {
         return DB::table('users')->orderBy('id', 'ASC')->get('id');
     }) . "<br>";
 
     var_dump($users);
+});
+
+
+Route::get('/remember', function () {
+    // $users =  Cache::get('users', function () {
+    //     return DB::table('users')->orderBy('id', 'ASC')->get('id');
+    // }). "<br>";
+
+    // var_dump($users);
+    // var_dump(Cache::has('users'));
+
+    // $users =  Cache::remember('users', 20, function () {
+    //     return DB::table('users')->orderBy('id', 'ASC')->get('id');
+    // }) . "<br>";
+
+    var_dump(Cache::get('users'));
+
+    echo"<hr>";
+
+    // $usersForever =  Cache::rememberForever('users-forever', function () {
+    //     return DB::table('users')->orderBy('id', 'ASC')->get('id');
+    // }) . "<br>";
+
+    var_dump(Cache::get('users-forever'));
+
+    echo"<hr>";
 });
