@@ -95,8 +95,32 @@ Route::get('remove-cache', function () {
     #remove todos os caches - a pasta inteira
     Cache::store('file')->flush();
 
-
-
     #acessando todos os caches
     var_dump(Cache::get('key'), Cache::get('key2'), Cache::get('key3'), Cache::get('key4'));
+});
+
+# Helper - sem utilizar facade em uma view
+Route::get('helper-cache', function () {
+    cache()->put('key', 'value of key');
+    var_dump(cache()->get('key'));
+    var_dump(cache()->get('key-1'));
+    var_dump(cache()->get('key-2'));
+
+    echo "<hr>";
+
+    cache()->put('key', 'value of key');
+
+
+    cache(["key-1" => "value-1"], 20);
+    cache(["key-2" => "value-2"], now()->addMinutes(1));
+
+    echo "<hr>";
+
+    cache()->remember('my-key', 1, function () {
+        return "my key default value";
+    });
+
+    cache(["my-key"], now()->addMinutes(1));
+
+    var_dump(cache()->get('my-key'));
 });
